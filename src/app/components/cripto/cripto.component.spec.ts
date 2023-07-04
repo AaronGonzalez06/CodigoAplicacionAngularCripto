@@ -1,0 +1,21 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { CriptoComponent } from './cripto.component';
+
+describe('CriptoComponent', () => {
+  let component: CriptoComponent;
+  let fixture: ComponentFixture<CriptoComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [CriptoComponent]
+    });
+    fixture = TestBed.createComponent(CriptoComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

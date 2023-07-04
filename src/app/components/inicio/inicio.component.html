@@ -1,0 +1,29 @@
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form class="d-flex custom">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="campo" [(ngModel)]="campo"  >
+            <button type="button" class="btn btn-primary" (click)="buscador()">Search</button>
+        </form>
+    </div>
+</div>
+<div class="d-flex idioma">
+    Selección de idioma:
+    <img (click)="change('en')" class="banderas" width="30" height="30" src="https://img.icons8.com/color/30/usa-circular.png" alt="usa-circular"/>
+    <img (click)="change('fr')" class="banderas" width="30" height="30" src="https://img.icons8.com/fluency/30/france-circular.png" alt="france-circular"/>
+</div>
+<section>
+    <div class="card" style="width: 18rem;" *ngFor="let dato of data">        
+        <span *ngIf="dato.urlToImage !== null; else foto">
+            <img src="{{dato.urlToImage}}" class="card-img-top" alt="...">
+        </span>
+        <ng-template #foto>
+            <img src="https://dummyimage.com/286x162/000/5158c4.png&text=Sin+imagen" class="card-img-top" alt="...">
+        </ng-template>
+            <div class="card-body">
+                <h5 class="card-title">{{dato.title}}</h5>
+                <h6>{{dato.author}}</h6>
+                <p class="card-text">{{dato.content}}</p>
+                <a href="{{dato.url}}" class="btn btn-primary">Leer más</a>
+            </div>        
+    </div>
+</section>

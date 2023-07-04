@@ -1,0 +1,82 @@
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form class="d-flex custom">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="campo" name="campo" (input)="onInputChange($event)" >
+        </form>
+        <div class="d-flex check">
+        <div class="form-check">
+          <input value="criptomoneda" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="selectedExchange" (change)="check()">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Criptomoneda
+          </label>
+        </div>
+        <div class="form-check">
+          <input value="exchange" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" [(ngModel)]="selectedExchange" (change)="check()" >
+          <label class="form-check-label" for="flexRadioDefault2">
+            Exchange
+          </label>
+        </div>
+      </div>
+    </div>
+</div>
+<section>
+  <h2>Criptomonedas y exchange</h2>
+    <table class="table table-primary table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Posición</th>
+            <th scope="col">Moneda</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Capitalización</th>
+            <th scope="col">Acciones en circulación</th>
+            <th scope="col">Favorito</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dato of data; let i = index">
+            <th scope="row">{{dato.market_cap_rank}}</th>
+            <td> <img src="{{dato.image}}" style="width: 20px;"> <strong>{{dato.name}}</strong> - <span class="symbol">{{dato.symbol}}</span></td>
+            <td>{{dato.current_price.toLocaleString('es-ES', opciones)}} €</td>
+            <td>{{dato.market_cap.toLocaleString('es-ES', opciones)}} €</td>
+            <td>{{dato.circulating_supply.toLocaleString('es-ES', opciones)}} {{dato.symbol}}</td>
+            <td><svg (click)="favCripto(dato.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-bitcoin" viewBox="0 0 16 16">
+              <path d="M5.5 13v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.5v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.084c1.992 0 3.416-1.033 3.416-2.82 0-1.502-1.007-2.323-2.186-2.44v-.088c.97-.242 1.683-.974 1.683-2.19C11.997 3.93 10.847 3 9.092 3H9V1.75a.25.25 0 0 0-.25-.25h-1a.25.25 0 0 0-.25.25V3h-.573V1.75a.25.25 0 0 0-.25-.25H5.75a.25.25 0 0 0-.25.25V3l-1.998.011a.25.25 0 0 0-.25.25v.989c0 .137.11.25.248.25l.755-.005a.75.75 0 0 1 .745.75v5.505a.75.75 0 0 1-.75.75l-.748.011a.25.25 0 0 0-.25.25v1c0 .138.112.25.25.25L5.5 13zm1.427-8.513h1.719c.906 0 1.438.498 1.438 1.312 0 .871-.575 1.362-1.877 1.362h-1.28V4.487zm0 4.051h1.84c1.137 0 1.756.58 1.756 1.524 0 .953-.626 1.45-2.158 1.45H6.927V8.539z"/>
+            </svg></td>
+          </tr>
+        </tbody>
+      </table>
+        <div *ngIf="data.length == 0" class="alert alert-primary" role="alert">
+          No tienes ninguna criptomoneda en favoritos
+        </div>
+      
+      <table class="table table-primary table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Posición</th>
+            <th scope="col">Exchange</th>
+            <th scope="col">País</th>
+            <th scope="col">Volument BTC 24H</th>
+            <th scope="col">Sitio web</th>
+            <th scope="col">Favorito</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dato of dataExchange; let i = index">
+            <th scope="row">{{dato.trust_score_rank}}</th>
+            <td> <img src="{{dato.image}}" style="width: 20px;"> <strong>{{dato.name}}</strong></td>
+            <td *ngIf="dato.country != null; else country"> {{dato.country}}</td>
+            <ng-template #country>
+                <td>No hay datos.</td>
+            </ng-template>
+            <td> {{dato.trade_volume_24h_btc.toLocaleString('es-ES', opciones)}} BTC</td>
+            <td> <a href="{{dato.url}}">Ir al exchange</a></td>
+            <td><svg (click)="favExchange(dato.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-bitcoin" viewBox="0 0 16 16">
+              <path d="M5.5 13v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.5v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.084c1.992 0 3.416-1.033 3.416-2.82 0-1.502-1.007-2.323-2.186-2.44v-.088c.97-.242 1.683-.974 1.683-2.19C11.997 3.93 10.847 3 9.092 3H9V1.75a.25.25 0 0 0-.25-.25h-1a.25.25 0 0 0-.25.25V3h-.573V1.75a.25.25 0 0 0-.25-.25H5.75a.25.25 0 0 0-.25.25V3l-1.998.011a.25.25 0 0 0-.25.25v.989c0 .137.11.25.248.25l.755-.005a.75.75 0 0 1 .745.75v5.505a.75.75 0 0 1-.75.75l-.748.011a.25.25 0 0 0-.25.25v1c0 .138.112.25.25.25L5.5 13zm1.427-8.513h1.719c.906 0 1.438.498 1.438 1.312 0 .871-.575 1.362-1.877 1.362h-1.28V4.487zm0 4.051h1.84c1.137 0 1.756.58 1.756 1.524 0 .953-.626 1.45-2.158 1.45H6.927V8.539z"/>
+            </svg></td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="dataExchange.length == 0" class="alert alert-primary" role="alert">
+        No tienes ningún exchange en favoritos
+      </div>
+</section>
